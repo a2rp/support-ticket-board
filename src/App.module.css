@@ -5,45 +5,119 @@
   background: var(--color-page);
 
   .pageContent {
-    display: grid;
     width: min(1480px, calc(100% - 64px));
-    min-height: calc(100vh - 72px);
-    grid-template-columns: 238px minmax(0, 1fr);
     margin: 0 auto;
-    padding: 32px 0 64px;
+    padding: 30px 0 56px;
   }
 
-  .emptyMessage {
-    padding: 30px 32px;
-    background: var(--color-surface);
-    border: 1px solid var(--color-line);
-    border-radius: 14px;
-    box-shadow: var(--color-shadow);
+  .pageHeading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 22px;
 
     h1 {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(28px, 3vw, 40px);
-      line-height: 1.15;
-      letter-spacing: -0.035em;
-      text-transform: capitalize;
+      font-size: clamp(30px, 3vw, 42px);
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+    }
+
+    p {
+      margin-top: 7px;
+      color: var(--color-muted);
+      font-size: 14px;
+    }
+  }
+
+  .summaryText {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 11px;
+    color: #627b7d;
+    font-size: 12px;
+    white-space: nowrap;
+    background: #eaf1ee;
+    border-radius: 7px;
+
+    span {
+      width: 4px;
+      height: 4px;
+      background: #91a8a2;
+      border-radius: 50%;
+    }
+  }
+
+  .workspace {
+    display: grid;
+    grid-template-columns: 220px minmax(320px, 370px) minmax(380px, 1fr);
+    align-items: start;
+    gap: 14px;
+  }
+
+  .detailPlaceholder {
+    min-height: 540px;
+    padding: 28px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: 13px;
+    box-shadow: var(--color-shadow);
+
+    > span {
+      color: #789091;
+      font-size: 12px;
+    }
+
+    h2 {
+      margin-top: 12px;
+      font-size: 20px;
+      font-weight: 650;
     }
 
     p {
       margin-top: 10px;
       color: var(--color-muted);
+      font-size: 14px;
     }
   }
 
-  @media (max-width: 820px) {
+  @media (max-width: 1180px) {
     .pageContent {
-      width: calc(100% - 32px);
-      min-height: initial;
-      grid-template-columns: minmax(0, 1fr);
-      padding-top: 16px;
+      width: calc(100% - 40px);
     }
 
-    .emptyMessage {
-      padding: 22px;
+    .workspace {
+      grid-template-columns: 190px minmax(300px, 0.9fr) minmax(330px, 1.1fr);
+      gap: 10px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .pageContent {
+      width: calc(100% - 32px);
+      padding-top: 24px;
+    }
+
+    .workspace {
+      grid-template-columns: 1fr;
+    }
+
+    .detailPlaceholder {
+      min-height: 280px;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .pageHeading {
+      align-items: start;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .summaryText {
+      font-size: 11px;
     }
   }
 }
