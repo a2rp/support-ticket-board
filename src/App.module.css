@@ -52,32 +52,31 @@
 
   .workspace {
     display: grid;
-    grid-template-columns: 220px minmax(320px, 370px) minmax(380px, 1fr);
+    grid-template-columns: 210px minmax(320px, 365px) minmax(380px, 1fr);
     align-items: start;
     gap: 14px;
   }
 
-  .detailPlaceholder {
-    min-height: 540px;
-    padding: 28px;
+  .noSelection {
+    display: grid;
+    min-height: 420px;
+    align-content: center;
+    justify-items: center;
+    padding: 24px;
+    text-align: center;
     background: var(--color-surface);
     border: 1px solid var(--color-line);
     border-radius: 13px;
     box-shadow: var(--color-shadow);
 
-    > span {
-      color: #789091;
-      font-size: 12px;
-    }
-
     h2 {
-      margin-top: 12px;
-      font-size: 20px;
-      font-weight: 650;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 25px;
     }
 
     p {
-      margin-top: 10px;
+      max-width: 320px;
+      margin-top: 9px;
       color: var(--color-muted);
       font-size: 14px;
     }
@@ -102,10 +101,6 @@
 
     .workspace {
       grid-template-columns: 1fr;
-    }
-
-    .detailPlaceholder {
-      min-height: 280px;
     }
   }
 

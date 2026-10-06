@@ -2,6 +2,7 @@
 import styles from "./App.module.css"
 import Header from "./components/header"
 import QueueSidebar from "./components/queueSidebar"
+import TicketDetails from "./components/ticketDetails"
 import TicketList from "./components/ticketList"
 import { DEFAULT_TICKETS } from "./data/tickets"
 
@@ -33,7 +34,7 @@ const getQueueCounts = (tickets) => ({
 })
 
 const App = () => {
-  const [tickets] = useState(loadTickets)
+  const [tickets, setTickets] = useState(loadTickets)
   const [activeQueue, setActiveQueue] = useState("open")
   const [selectedTicketId, setSelectedTicketId] = useState("ST-3842")
   const [query, setQuery] = useState("")
@@ -47,8 +48,36 @@ const App = () => {
   const selectedTicket = filteredTickets.find((ticket) => ticket.id === selectedTicketId) ?? filteredTickets[0]
 
   useEffect(() => {
-    localStorage.setItem("harbor-support-tickets", JSON.stringify(tickets))
+    try {
+      localStorage.setItem("harbor-support-tickets", JSON.stringify(tickets))
+    } catch {
+      return
+    }
   }, [tickets])
+
+  const updateTicket = (ticketId, updates) => {
+    setTickets((currentTickets) => currentTickets.map((ticket) => (
+      ticket.id === ticketId
+        ? { ...ticket, ...updates, updatedAt: new Date().toISOString() }
+        : ticket
+    )))
+  }
+
+  const addReply = (ticketId, text, isInternalNote) => {
+    const time = "Today, " + new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
+    setTickets((currentTickets) => currentTickets.map((ticket) => {
+      if (ticket.id !== ticketId) return ticket
+      return {
+        ...ticket,
+        status: isInternalNote ? ticket.status : "Open",
+        updatedAt: new Date().toISOString(),
+        messages: [
+          ...ticket.messages,
+          { sender: "You", role: isInternalNote ? "note" : "agent", time, text },
+        ],
+      }
+    }))
+  }
 
   return (
     <div className={styles.appShell} id="inbox">
@@ -71,17 +100,14 @@ const App = () => {
             selectedTicketId={selectedTicket?.id}
             tickets={filteredTickets}
           />
-          <section className={styles.detailPlaceholder} aria-label="Ticket details">
-            {selectedTicket ? (
-              <>
-                <span>{selectedTicket.id}</span>
-                <h2>{selectedTicket.subject}</h2>
-                <p>Ticket conversation and reply tools will appear here.</p>
-              </>
-            ) : (
-              <p>No ticket selected.</p>
-            )}
-          </section>
+          {selectedTicket ? (
+            <TicketDetails ticket={selectedTicket} onUpdate={updateTicket} onReply={addReply} />
+          ) : (
+            <section className={styles.noSelection}>
+              <h2>No ticket in this view</h2>
+              <p>Choose another queue or update your search to see a conversation.</p>
+            </section>
+          )}
         </div>
       </main>
     </div>
