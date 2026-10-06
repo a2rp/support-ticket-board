@@ -1,5 +1,6 @@
 ﻿import { useCallback, useEffect, useState } from "react"
 import styles from "./App.module.css"
+import AppFooter from "./components/appFooter"
 import BackToTop from "./components/backToTop"
 import CreateTicketModal from "./components/createTicketModal"
 import Header from "./components/header"
@@ -123,6 +124,7 @@ const App = () => {
           )}
         </div>
       </main>
+      <AppFooter />
       <BackToTop />
       {isCreateOpen && (
         <CreateTicketModal onClose={closeCreateModal} onCreate={createTicket} />
