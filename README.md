@@ -33,19 +33,19 @@ Replies are saved to the local conversation only. The app does not send email, c
 
 Install Node.js and npm, then from this folder run:
 
-~~~~sh
+```sh
 npm install
 npm run dev
-~~~~
+```
 
 Use the local URL printed by Vite.
 
 ## Lint and production build
 
-~~~~sh
+```sh
 npm run lint
 npm run build
-~~~~
+```
 
 The production build is written to dist. Vite source maps are disabled.
 
@@ -53,9 +53,9 @@ The production build is written to dist. Vite source maps are disabled.
 
 The GitHub Pages site is published from the gh-pages branch. The deploy script publishes dist, and npm runs predeploy first to build the latest app.
 
-~~~~sh
+```sh
 npm run deploy
-~~~~
+```
 
 Live URL: [https://a2rp.github.io/support-ticket-board/](https://a2rp.github.io/support-ticket-board/)
 

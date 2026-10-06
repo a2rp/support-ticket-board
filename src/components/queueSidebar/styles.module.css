@@ -1,106 +1,109 @@
 ﻿.queueSidebar {
-  padding: 20px 12px 16px;
+    padding: 20px 12px 16px;
 
-  .title {
-    padding: 0 11px;
-    color: #789091;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-  }
-
-  .queueList {
-    display: grid;
-    gap: 4px;
-    margin-top: 12px;
-  }
-
-  .queueButton {
-    display: flex;
-    min-height: 42px;
-    align-items: center;
-    gap: 10px;
-    padding: 0 10px;
-    color: #4f6669;
-    text-align: left;
-    background: transparent;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
-
-    &:hover,
-    &:focus-visible {
-      background: #f6faf9;
-      border-color: #d8e7e3;
-    }
-
-    &.active {
-      color: #165f5d;
-      font-weight: 650;
-      background: #eaf4f1;
-      border-color: #cbe2dc;
-      box-shadow: 0 2px 8px rgb(34 91 82 / 5%);
-    }
-  }
-
-  .queueIcon {
-    width: 17px;
-    height: 17px;
-    flex: 0 0 auto;
-  }
-
-  .queueName {
-    min-width: 0;
-    flex: 1;
-    font-size: 13px;
-    white-space: nowrap;
-  }
-
-  .count {
-    min-width: 25px;
-    padding: 2px 6px;
-    color: #748789;
-    font-size: 11px;
-    text-align: center;
-    background: #edf2f0;
-    border-radius: 12px;
-  }
-
-  .active .count {
-    color: #165f5d;
-    background: #d4e9e3;
-  }
-
-  .note {
-    margin: 28px 10px 0;
-    padding-top: 16px;
-    color: #89999a;
-    font-size: 12px;
-    border-top: 1px solid #e5ecea;
-  }
-
-  @media (max-width: 820px) {
-    padding: 14px 14px 10px;
-
-    .title,
-    .note {
-      display: none;
+    .title {
+        padding: 0 11px;
+        color: #789091;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
     }
 
     .queueList {
-      display: flex;
-      gap: 6px;
-      margin-top: 0;
-      overflow-x: auto;
-      padding-bottom: 3px;
+        display: grid;
+        gap: 4px;
+        margin-top: 12px;
     }
 
     .queueButton {
-      min-height: 38px;
-      flex: 0 0 auto;
-      gap: 7px;
-      padding: 0 10px;
+        display: flex;
+        min-height: 42px;
+        align-items: center;
+        gap: 10px;
+        padding: 0 10px;
+        color: #4f6669;
+        text-align: left;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        transition:
+            border-color 160ms ease,
+            box-shadow 160ms ease,
+            background-color 160ms ease;
+
+        &:hover,
+        &:focus-visible {
+            background: #f6faf9;
+            border-color: #d8e7e3;
+        }
+
+        &.active {
+            color: #165f5d;
+            font-weight: 650;
+            background: #eaf4f1;
+            border-color: #cbe2dc;
+            box-shadow: 0 2px 8px rgb(34 91 82 / 5%);
+        }
     }
-  }
+
+    .queueIcon {
+        width: 17px;
+        height: 17px;
+        flex: 0 0 auto;
+    }
+
+    .queueName {
+        min-width: 0;
+        flex: 1;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    .count {
+        min-width: 25px;
+        padding: 2px 6px;
+        color: #748789;
+        font-size: 11px;
+        text-align: center;
+        background: #edf2f0;
+        border-radius: 12px;
+    }
+
+    .active .count {
+        color: #165f5d;
+        background: #d4e9e3;
+    }
+
+    .note {
+        margin: 28px 10px 0;
+        padding-top: 16px;
+        color: #89999a;
+        font-size: 12px;
+        border-top: 1px solid #e5ecea;
+    }
+
+    @media (max-width: 820px) {
+        padding: 14px 14px 10px;
+
+        .title,
+        .note {
+            display: none;
+        }
+
+        .queueList {
+            display: flex;
+            gap: 6px;
+            margin-top: 0;
+            overflow-x: auto;
+            padding-bottom: 3px;
+        }
+
+        .queueButton {
+            min-height: 38px;
+            flex: 0 0 auto;
+            gap: 7px;
+            padding: 0 10px;
+        }
+    }
 }
