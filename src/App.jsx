@@ -1,5 +1,6 @@
-﻿import { useEffect, useState } from "react"
+﻿import { useCallback, useEffect, useState } from "react"
 import styles from "./App.module.css"
+import CreateTicketModal from "./components/createTicketModal"
 import Header from "./components/header"
 import QueueSidebar from "./components/queueSidebar"
 import TicketDetails from "./components/ticketDetails"
@@ -38,6 +39,7 @@ const App = () => {
   const [activeQueue, setActiveQueue] = useState("open")
   const [selectedTicketId, setSelectedTicketId] = useState("ST-3842")
   const [query, setQuery] = useState("")
+  const [isCreateOpen, setIsCreateOpen] = useState(false)
   const counts = getQueueCounts(tickets)
   const filteredTickets = tickets
     .filter((ticket) => isInQueue(ticket, activeQueue))
@@ -54,6 +56,8 @@ const App = () => {
       return
     }
   }, [tickets])
+
+  const closeCreateModal = useCallback(() => setIsCreateOpen(false), [])
 
   const updateTicket = (ticketId, updates) => {
     setTickets((currentTickets) => currentTickets.map((ticket) => (
@@ -79,9 +83,17 @@ const App = () => {
     }))
   }
 
+  const createTicket = (ticket) => {
+    setTickets((currentTickets) => [ticket, ...currentTickets])
+    setSelectedTicketId(ticket.id)
+    setActiveQueue("open")
+    setQuery("")
+    setIsCreateOpen(false)
+  }
+
   return (
     <div className={styles.appShell} id="inbox">
-      <Header />
+      <Header onCreateTicket={() => setIsCreateOpen(true)} />
       <main className={styles.pageContent}>
         <div className={styles.pageHeading}>
           <div>
@@ -110,6 +122,9 @@ const App = () => {
           )}
         </div>
       </main>
+      {isCreateOpen && (
+        <CreateTicketModal onClose={closeCreateModal} onCreate={createTicket} />
+      )}
     </div>
   )
 }

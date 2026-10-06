@@ -58,17 +58,29 @@
     font-size: 14px;
   }
 
-  .repository {
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .repository,
+  .createButton {
     display: inline-flex;
     min-height: 38px;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     padding: 0 13px;
-    color: #eaf3f1;
     font-size: 13px;
-    border: 1px solid rgb(225 242 238 / 26%);
+    border: 1px solid transparent;
     border-radius: 8px;
     transition: border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .repository {
+    color: #eaf3f1;
+    border-color: rgb(225 242 238 / 26%);
 
     svg {
       width: 15px;
@@ -82,9 +94,28 @@
     }
   }
 
+  .createButton {
+    color: #16373b;
+    font-weight: 650;
+    background: #c2e4d5;
+    border-color: #c2e4d5;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background: #d5eee3;
+      border-color: #d5eee3;
+      box-shadow: 0 0 0 3px rgb(194 228 213 / 19%);
+    }
+  }
+
   @media (max-width: 540px) {
     .inner {
-      width: calc(100% - 32px);
+      width: calc(100% - 24px);
     }
 
     .brand {
@@ -92,7 +123,22 @@
     }
 
     .brandLabel,
-    .divider {
+    .divider,
+    .repository span {
+      display: none;
+    }
+
+    .actions {
+      gap: 6px;
+    }
+
+    .repository,
+    .createButton {
+      min-height: 36px;
+      padding: 0 9px;
+    }
+
+    .createButton span {
       display: none;
     }
   }
