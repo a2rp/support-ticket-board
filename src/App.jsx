@@ -1,4 +1,4 @@
-﻿import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import styles from "./App.module.css"
 import AppFooter from "./components/appFooter"
 import BackToTop from "./components/backToTop"
@@ -115,7 +115,7 @@ const App = () => {
             tickets={filteredTickets}
           />
           {selectedTicket ? (
-            <TicketDetails ticket={selectedTicket} onUpdate={updateTicket} onReply={addReply} />
+            <TicketDetails key={selectedTicket.id} ticket={selectedTicket} onUpdate={updateTicket} onReply={addReply} />
           ) : (
             <section className={styles.noSelection}>
               <h2>No ticket in this view</h2>

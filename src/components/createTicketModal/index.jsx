@@ -4,19 +4,40 @@ import { TICKET_PRIORITIES } from "../../data/tickets"
 import styles from "./styles.module.css"
 
 const CreateTicketModal = ({ onClose, onCreate }) => {
+  const modalRef = useRef(null)
   const subjectRef = useRef(null)
   const [priority, setPriority] = useState("Normal")
 
   useEffect(() => {
     const previousFocus = document.activeElement
-    const closeOnEscape = (event) => {
-      if (event.key === "Escape") onClose()
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        onClose()
+        return
+      }
+
+      if (event.key !== "Tab") return
+      const focusableElements = modalRef.current?.querySelectorAll(
+        'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href]',
+      )
+      if (!focusableElements?.length) return
+
+      const firstElement = focusableElements[0]
+      const lastElement = focusableElements[focusableElements.length - 1]
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault()
+        lastElement.focus()
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault()
+        firstElement.focus()
+      }
     }
 
     subjectRef.current?.focus()
-    document.addEventListener("keydown", closeOnEscape)
+    document.addEventListener("keydown", handleKeyDown)
     return () => {
-      document.removeEventListener("keydown", closeOnEscape)
+      document.removeEventListener("keydown", handleKeyDown)
       previousFocus?.focus()
     }
   }, [onClose])
@@ -60,6 +81,7 @@ const CreateTicketModal = ({ onClose, onCreate }) => {
     >
       <section
         className={styles.modal}
+        ref={modalRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="create-ticket-title"

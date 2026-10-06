@@ -1,5 +1,5 @@
-﻿import { useState } from "react"
-import { LuArrowUpRight, LuCheck, LuCornerDownLeft, LuMessageSquare, LuPaperclip, LuSend } from "react-icons/lu"
+import { useState } from "react"
+import { LuArrowUpRight, LuCornerDownLeft, LuMessageSquare, LuSend } from "react-icons/lu"
 import { TEAM_MEMBERS, TICKET_PRIORITIES, TICKET_STATUSES } from "../../data/tickets"
 import styles from "./styles.module.css"
 
@@ -9,6 +9,7 @@ const TicketDetails = ({ onReply, onUpdate, ticket }) => {
   const [replyText, setReplyText] = useState("")
   const [isInternalNote, setIsInternalNote] = useState(false)
   const avatarUrl = ticket.avatar ? import.meta.env.BASE_URL + ticket.avatar : ""
+
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -134,16 +135,10 @@ const TicketDetails = ({ onReply, onUpdate, ticket }) => {
           <span className={styles.replyHint}>
             {isInternalNote ? "Only your team can see this note." : "The customer will receive this reply."}
           </span>
-          <div className={styles.composerActions}>
-            <button className={styles.attachButton} type="button" aria-label="Attachments are not available in this demo" title="Attachments are not available in this demo" disabled>
-              <LuPaperclip aria-hidden="true" />
-            </button>
-            <button className={styles.sendButton} type="submit" disabled={!replyText.trim()}>
-              <LuSend aria-hidden="true" />
-              {isInternalNote ? "Add note" : "Send reply"}
-              <LuCheck className={styles.sentIcon} aria-hidden="true" />
-            </button>
-          </div>
+          <button className={styles.sendButton} type="submit" disabled={!replyText.trim()}>
+            <LuSend aria-hidden="true" />
+            {isInternalNote ? "Add note" : "Send reply"}
+          </button>
         </div>
       </form>
     </section>
