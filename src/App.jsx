@@ -1,11 +1,15 @@
-﻿import styles from './App.module.css'
+﻿import styles from "./App.module.css"
+import Header from "./components/header"
 
 const App = () => {
   return (
-    <main className={styles.appShell}>
-      <h1>Support ticket board</h1>
-      <p>Your customer support workspace is being prepared.</p>
-    </main>
+    <div className={styles.appShell} id="inbox">
+      <Header />
+      <main className={styles.pageContent}>
+        <h1>A calmer way to handle customer questions.</h1>
+        <p>Your support inbox is taking shape.</p>
+      </main>
+    </div>
   )
 }
 
