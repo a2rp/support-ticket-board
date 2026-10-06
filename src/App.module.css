@@ -1,0 +1,6 @@
+﻿.appShell {
+  min-height: 100vh;
+  padding: 48px;
+  color: var(--color-ink);
+  background: var(--color-page);
+}
