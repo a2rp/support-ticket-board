@@ -7,12 +7,43 @@ import Header from "./components/header";
 import QueueSidebar from "./components/queueSidebar";
 import TicketDetails from "./components/ticketDetails";
 import TicketList from "./components/ticketList";
-import { DEFAULT_TICKETS } from "./data/tickets";
+import { DEFAULT_TICKETS, TICKET_PRIORITIES, TICKET_STATUSES } from "./data/tickets";
+
+const isValidTicket = (ticket) =>
+    ticket &&
+    typeof ticket === "object" &&
+    typeof ticket.id === "string" &&
+    ticket.id.length > 0 &&
+    typeof ticket.subject === "string" &&
+    typeof ticket.customer === "string" &&
+    typeof ticket.email === "string" &&
+    typeof ticket.company === "string" &&
+    typeof ticket.category === "string" &&
+    TICKET_STATUSES.includes(ticket.status) &&
+    TICKET_PRIORITIES.includes(ticket.priority) &&
+    typeof ticket.assignee === "string" &&
+    !Number.isNaN(Date.parse(ticket.updatedAt)) &&
+    Array.isArray(ticket.messages) &&
+    ticket.messages.every(
+        (message) =>
+            message &&
+            typeof message.sender === "string" &&
+            ["customer", "agent", "note"].includes(message.role) &&
+            typeof message.time === "string" &&
+            typeof message.text === "string",
+    );
 
 const loadTickets = () => {
     try {
         const savedTickets = localStorage.getItem("harbor-support-tickets");
-        return savedTickets ? JSON.parse(savedTickets) : DEFAULT_TICKETS;
+        if (!savedTickets) return DEFAULT_TICKETS;
+
+        const parsed = JSON.parse(savedTickets);
+        if (!Array.isArray(parsed) || !parsed.every(isValidTicket)) {
+            return DEFAULT_TICKETS;
+        }
+        const ids = parsed.map((ticket) => ticket.id);
+        return new Set(ids).size === ids.length ? parsed : DEFAULT_TICKETS;
     } catch {
         return DEFAULT_TICKETS;
     }
@@ -39,6 +70,14 @@ const getQueueCounts = (tickets) => ({
     urgent: tickets.filter((ticket) => isInQueue(ticket, "urgent")).length,
     resolved: tickets.filter((ticket) => isInQueue(ticket, "resolved")).length,
 });
+
+const getNextTicketId = (tickets) => {
+    const highestNumber = tickets.reduce((highest, ticket) => {
+        const match = /^ST-(\d+)$/.exec(ticket.id);
+        return match ? Math.max(highest, Number(match[1])) : highest;
+    }, 3842);
+    return `ST-${highestNumber + 1}`;
+};
 
 const App = () => {
     const [tickets, setTickets] = useState(loadTickets);
@@ -120,8 +159,9 @@ const App = () => {
     };
 
     const createTicket = (ticket) => {
-        setTickets((currentTickets) => [ticket, ...currentTickets]);
-        setSelectedTicketId(ticket.id);
+        const newTicket = { ...ticket, id: getNextTicketId(tickets) };
+        setTickets((currentTickets) => [newTicket, ...currentTickets]);
+        setSelectedTicketId(newTicket.id);
         setActiveQueue("open");
         setQuery("");
         setIsCreateOpen(false);

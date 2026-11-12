@@ -53,7 +53,6 @@ const CreateTicketModal = ({ onClose, onCreate }) => {
         const now = new Date();
 
         onCreate({
-            id: "ST-" + String(Date.now()).slice(-4),
             subject,
             customer,
             email: formData.get("email").trim(),
